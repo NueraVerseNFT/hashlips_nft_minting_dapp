@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "./redux/blockchain/blockchainActions";
 import { fetchData } from "./redux/data/dataActions";
+import { Button } from "@mui/material";
 import * as s from "./styles/globalStyles";
 import styled from "styled-components";
 
@@ -130,7 +131,7 @@ function App() {
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
     blockchain.smartContract.methods
-      .mint(mintAmount)
+      .mintTokens(mintAmount)
       .send({
         gasLimit: String(totalGasLimit),
         to: CONFIG.CONTRACT_ADDRESS,
@@ -294,6 +295,13 @@ function App() {
                     >
                       CONNECT
                     </StyledButton>
+                    <Button variant="contained"    onClick={(e) => {
+                        e.preventDefault();
+                        dispatch(connect());
+                        getData();
+                      }}
+                      >Contained</Button>
+
                     {blockchain.errorMsg !== "" ? (
                       <>
                         <s.SpacerSmall />
